@@ -1,38 +1,115 @@
-.App {
-  text-align: center;
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.left-section {
+  flex: 5;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.left-section img {
+  max-width: 100%;
+  height: auto;
+}
+
+.right-section {
+  flex: 6;
+  text-align: left;
+}
+h1 {
+  font-size: 64px;
+}
+.sanka {
+  font-size: 31px;
+  font-weight: bold;
+}
+.buttons {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+/* 
+button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  max-width: 380px;
+  min-width: 300px;
+} */
+/* 
+.google-btn {
+  background-color: #fff;
+  color: #000;
 }
 
-.App-link {
-  color: #61dafb;
+.apple-btn {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+  font-weight: bold;
+} */
+/* 
+.create-btn {
+  background-color: #1da1f2;
+  color: #fff;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-btn {
+  background-color: #000;
+  color: #1da1f2;
+  border: 0.1px solid #fff;
+  font-weight: bold;
+} */
+
+.info {
+  font-size: 0.8rem;
+  margin-bottom: 4rem;
+  max-width: 380px;
+  min-width: 300px;
+}
+
+.login {
+  font-weight: bold;
+}
+.bordered-text {
+  display: inline-block;
+  position: relative;
+  padding: 0 20px;
+  margin: 0 0;
+}
+
+.bordered-text::before,
+.bordered-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 110px; 
+  height: 1px; 
+  background-color: gray
+}
+
+.bordered-text::before {
+  right: 100%;
+}
+
+.bordered-text::after {
+  left: 100%;
 }
