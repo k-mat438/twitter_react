@@ -1,58 +1,83 @@
-import xLogo from'../x-logo2.png';
+import { useState } from "react";
+import xLogo from '../x-logo2.png';
 import '../App.css';
-import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
-import Button from '@mui/material/Button';
+import { CustomButton } from "../styles/HomeStyle";
 
-const CustomButton = {
-  border: '0.1px solid #fff',
-  borderRadius: '2rem',
-  fontSize: '1rem',
-  fontWeight: 'bold',
-  maxWidth: '380px',
-  minWidth: '300px',
-};
-const IconWithButton = {
-  backgroundColor: '#fff',
-  color: '#000',
-  borderRadius: '2rem',
-  "&:hover": {
-    opacity: '0.9',
-    backgroundColor: '#e0e0e0'
-  },
-  textTransform: 'none',
-  maxWidth: '380px',
-  minWidth: '300px',
-}
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
+import ScrollDialogButton from "../components/auth/ScrollDialog";
+import LogInForm  from "../components/LogInForm";
+import AuthRegister from "../components/auth/AuthRegisterButton";
 
 const Home = () => {
+  const [state, setState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+
+  const [ openAlert, setOpenAlert ] = useState(false);
+
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = () => () => {
+    setState({ ...state, open: true});
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false});
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
   return (
     <div className="container">
       <div className="left-section">
         <img src={xLogo} alt="X Logo" />
       </div>
       <div className="right-section">
-        <h1>すべての話題が、ここに。</h1>
+        <h1 style={{ marginBottom: '0' }}>すべての話題が、ここに。</h1>
         <p className='sanka'>今すぐ参加しましょう。</p>
-        
         <div>
-          <div class="buttons">
-            <Button startIcon={<FcGoogle/>} sx={IconWithButton}>Google で登録</Button>
-            {/* <button className="google-btn"><FcGoogle size='1.3rem'/>Google で登録</button> */}
-            {/* <button className="apple-btn"><FaApple size='1.3rem'/>Appleのアカウントで登録</button> */}
-            <Button startIcon={<FaApple/>} sx={{ ...IconWithButton, fontWeight: 'bold' }}>Appleのアカウントで登録</Button>
-            <div style={{textAlign: 'center',minWidth:'300px',maxWidth: '380px'}}>
-              <p className="bordered-text">または</p>
-            </div>
-            {/* <button className="create-btn">アカウントを作成</button> */}
-            <Button variant="contained" sx={{...CustomButton,border: 'none',fontSize: 'none', backgroundColor:'#1da1f2'}}>アカウントを作成</Button>
-          </div>
+          <AuthRegister handleClick={handleClick({ vertical, horizontal })} setOpenAlert={setOpenAlert}/>
           <p className="info">アカウントを登録することにより、利用規約とプライバシーポリシー（Cookieの使用を含む）に同意したことになります。</p>
           <p className="login">アカウントをお持ちの場合</p>
-          <Button sx={{...CustomButton,marginBottom:'3rem'}} variant="outlined">ログイン</Button>
+          <ScrollDialogButton variant={'outlined'} sx={{ ...CustomButton, marginBottom: '3rem' }} buttonText='ログイン' formComponent={LogInForm} setOpenAlert={setOpenAlert}/>
         </div>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={2500}
+        message="Not available yet"
+        key={vertical + horizontal}
+        ContentProps={{
+          style: {
+            backgroundColor: '#FFC107',
+            color: 'black', 
+          },
+        }}
+      />
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleAlertClose}>
+        <Alert
+          onClose={handleAlertClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          確認メールを送信しました。
+        </Alert>
+      </Snackbar>
     </div>
+    
   )
 }
 

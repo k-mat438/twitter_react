@@ -15,6 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  margin-top: 5rem;
 }
 
 .left-section {
@@ -40,62 +41,28 @@ h1 {
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
-/* 
-button {
-  padding: 0.5rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  max-width: 380px;
-  min-width: 300px;
-} */
-/* 
-.google-btn {
-  background-color: #fff;
-  color: #000;
-}
-
-.apple-btn {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #fff;
-  font-weight: bold;
-} */
-/* 
-.create-btn {
-  background-color: #1da1f2;
-  color: #fff;
-  font-weight: bold;
-}
-
-.login-btn {
-  background-color: #000;
-  color: #1da1f2;
-  border: 0.1px solid #fff;
-  font-weight: bold;
-} */
-
 .info {
   font-size: 0.8rem;
   margin-bottom: 4rem;
-  max-width: 380px;
-  min-width: 300px;
+  width: 300px;
 }
-
 .login {
   font-weight: bold;
 }
+.mataha {
+  text-align:center;
+  width: 300px;
+}
+
 .bordered-text {
   display: inline-block;
   position: relative;
   padding: 0 20px;
   margin: 0 0;
 }
-
 .bordered-text::before,
 .bordered-text::after {
   content: "";
@@ -112,4 +79,11 @@ button {
 
 .bordered-text::after {
   left: 100%;
+}
+
+@media screen and (min-width: 1920px){
+  .mataha,
+  .info {
+    width: 380px;
+  }
 }
