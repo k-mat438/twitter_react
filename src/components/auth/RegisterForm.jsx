@@ -17,7 +17,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import axios from "axios";
+// import axios from "axios";
+import { registerInstance } from '../../axios/instance';
 
 const RegisterForm = (props) => {
   const { handleClose ,setOpenAlert} = props
@@ -37,16 +38,11 @@ const RegisterForm = (props) => {
     control
   } = useForm();
 
-  const requestURL = "http://localhost:3000/api/v1/users";
-
-  const onSubmit = (data) => {
-    data.confirm_success_url = "http://localhost:3001/";
-
-    axios.post(requestURL, new URLSearchParams(data)).then((response) => {
-      console.log(response.data);
-      setOpenAlert(true);
-      handleClose();
-    })
+  const onSubmit = async(data) => {
+    const result = registerInstance(data);
+    await console.log(result)
+    setOpenAlert(true);
+    handleClose();
   };
 
   

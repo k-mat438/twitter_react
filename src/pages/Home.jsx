@@ -11,7 +11,7 @@ import LogInForm  from "../components/LogInForm";
 import AuthRegister from "../components/auth/AuthRegisterButton";
 
 const Home = () => {
-  const [state, setState] = useState({
+  const [openBar, setOpenBar] = useState({
     open: false,
     vertical: 'top',
     horizontal: 'center',
@@ -19,14 +19,14 @@ const Home = () => {
 
   const [ openAlert, setOpenAlert ] = useState(false);
 
-  const { vertical, horizontal, open } = state;
+  const { vertical, horizontal, open } = openBar;
 
   const handleClick = () => () => {
-    setState({ ...state, open: true});
+    setOpenBar({ ...openBar, open: true});
   };
 
   const handleClose = () => {
-    setState({ ...state, open: false});
+    setOpenBar({ ...openBar, open: false});
   };
 
   const handleAlertClose = (event, reason) => {
