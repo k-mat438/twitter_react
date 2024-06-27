@@ -39,8 +39,8 @@ const RegisterForm = (props) => {
   } = useForm();
 
   const onSubmit = async(data) => {
-    const result = registerInstance(data);
-    await console.log(result)
+    const result = await registerInstance(data);
+    console.log(result)
     setOpenAlert(true);
     handleClose();
   };

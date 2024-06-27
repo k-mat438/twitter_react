@@ -3,12 +3,11 @@ import xLogo from '../x-logo2.png';
 import '../App.css';
 import { CustomButton } from "../styles/HomeStyle";
 
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-
 import ScrollDialogButton from "../components/auth/ScrollDialog";
-import LogInForm  from "../components/LogInForm";
+import LogInForm  from "../components/auth/LogInForm";
 import AuthRegister from "../components/auth/AuthRegisterButton";
+import { SnackbarAlert } from "../components/snackbar/SnackbarAlert";
+import { SnackbarTop } from "../components/snackbar/SnackbarTob";
 
 const Home = () => {
   const [openBar, setOpenBar] = useState({
@@ -52,32 +51,9 @@ const Home = () => {
           <ScrollDialogButton variant={'outlined'} sx={{ ...CustomButton, marginBottom: '3rem' }} buttonText='ログイン' formComponent={LogInForm} setOpenAlert={setOpenAlert}/>
         </div>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={2500}
-        message="Not available yet"
-        key={vertical + horizontal}
-        ContentProps={{
-          style: {
-            backgroundColor: '#FFC107',
-            color: 'black', 
-          },
-        }}
-      />
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleAlertClose}>
-        <Alert
-          onClose={handleAlertClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          確認メールを送信しました。
-        </Alert>
-      </Snackbar>
+      <SnackbarTop vertical={vertical} horizontal={horizontal} handleClose={handleClose} open={open}/>
+      <SnackbarAlert openAlert={openAlert} handleAlertClose={handleAlertClose}/>
     </div>
-    
   )
 }
 

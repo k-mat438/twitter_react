@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from "../styles/DialogStyle";
+import { theme } from "../../styles/DialogStyle";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 
@@ -11,11 +11,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import { CustomButton, IconWithButton } from "../styles/HomeStyle";
-import Snackbar from '@mui/material/Snackbar';
+import { CustomButton, IconWithButton } from "../../styles/HomeStyle";
+import { SnackbarTop } from '../snackbar/SnackbarTob';
+import { loginInstance } from '../../axios/instance';
+
+import { useNavigate } from "react-router-dom";
 
 
 const LogInForm = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -27,24 +31,30 @@ const LogInForm = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const [state, setState] = useState({
+
+  const [openBar, setOpenBar] = useState({
     open: false,
     vertical: 'top',
     horizontal: 'center',
   });
 
-  const { vertical, horizontal, open } = state;
+  const { vertical, horizontal, open } = openBar;
 
   const handleClick = () => () => {
-    setState({ ...state, open: true});
+    setOpenBar({ ...openBar, open: true});
   };
 
   const handleClose = () => {
-    setState({ ...state, open: false});
+    setOpenBar({ ...openBar, open: false});
   };
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async(data) => {
+    const result = await loginInstance({
+      email: data.email,
+      password: data.password
+    });
+    console.log(result.data)
+    navigate('/api/v1/tweets'); 
   }
 
 
@@ -88,20 +98,7 @@ const LogInForm = () => {
           <Button variant={'contained'} sx={{ ...CustomButton, border: 'none', color:'white',backgroundColor: '#1da1f2' }} type='submit'>ログイン</Button>
         </Box>
       </Box>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={2500}
-        message="Not available yet"
-        key={vertical + horizontal}
-        ContentProps={{
-          style: {
-            backgroundColor: '#FFC107',
-            color: 'black', 
-          },
-        }}
-      />
+      <SnackbarTop vertical={vertical} horizontal={horizontal} handleClose={handleClose} open={open}/>
     </ThemeProvider>
   )
 }

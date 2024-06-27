@@ -9,8 +9,13 @@ const apiHome = axios.create({
 
 
 export const registerInstance = async(data) =>{
-  data.confirm_success_url = `${process.env.REACT_APP_CONFIRM_SUCCESS_URL}`;
-  const response = await apiHome.post('/users', data);
+  const response = await apiHome.post('/users',data);
   
+  return response.data
+}
+
+export const loginInstance = async(data) => {
+  const response = await apiHome.post('/users/sign_in', data);
+
   return response.data
 }
