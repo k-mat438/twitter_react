@@ -2,15 +2,15 @@ import Snackbar from '@mui/material/Snackbar';
 
 export const SnackbarTop = (props) => {
 
-  const { vertical, horizontal,handleClose, open } = props;
+  const { handleClose, openBar } = props;
   return (
     <Snackbar
-    anchorOrigin={{ vertical, horizontal }}
-    open={open}
+    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    open={openBar}
     onClose={handleClose}
     autoHideDuration={2500}
     message="Not available yet"
-    key={vertical + horizontal}
+    // key={vertical + horizontal}
     ContentProps={{
       style: {
         backgroundColor: '#FFC107',

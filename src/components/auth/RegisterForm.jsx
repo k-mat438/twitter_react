@@ -21,7 +21,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { registerInstance } from '../../axios/instance';
 
 const RegisterForm = (props) => {
-  const { handleClose ,setOpenAlert} = props
+  const { handleClose ,setOpenAlert, setFalseRegister} = props
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -39,10 +39,19 @@ const RegisterForm = (props) => {
   } = useForm();
 
   const onSubmit = async(data) => {
-    const result = await registerInstance(data);
-    console.log(result)
-    setOpenAlert(true);
-    handleClose();
+    await registerInstance(data)
+      .then((res) => {
+        if (res.status === 'success') {
+          console.log(res);
+          setOpenAlert(true);
+          handleClose();
+        } else {
+          throw new Error('Registration failed');
+        }
+      }).catch((error) => {
+        console.error('Registration error:', error);
+        setFalseRegister({ alertMessage: error.message, error: true});
+      })
   };
 
   

@@ -12,10 +12,11 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { CustomButton, IconWithButton } from "../../styles/HomeStyle";
-import { SnackbarTop } from '../snackbar/SnackbarTob';
+import { SnackbarTop } from '../snackbar/SnackbarTop';
 import { loginInstance } from '../../axios/instance';
 
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 
 
 const LogInForm = () => {
@@ -32,37 +33,37 @@ const LogInForm = () => {
     event.preventDefault();
   };
 
-  const [openBar, setOpenBar] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
+  const [openBar, setOpenBar] = useState(false);
 
-  const { vertical, horizontal, open } = openBar;
-
-  const handleClick = () => () => {
-    setOpenBar({ ...openBar, open: true});
+  const handleClick = () => {
+    setOpenBar(true);
   };
 
   const handleClose = () => {
-    setOpenBar({ ...openBar, open: false});
+    setOpenBar(false);
   };
 
   const onSubmit = async(data) => {
-    const result = await loginInstance({
-      email: data.email,
-      password: data.password
-    });
-    console.log(result.data)
-    navigate('/api/v1/tweets'); 
+    await loginInstance(data)
+      .then((result) => {
+        if (result.status === 200) {
+          console.log(result);
+          Cookies.set("_access_token", result.headers["access-token"])
+          Cookies.set("_client", result.headers["client"])
+          Cookies.set("_uid", result.headers["uid"])
+          navigate('/api/v1/tweets'); 
+        }
+      })
+      .catch((error) => {
+        console.error('Registration error:', error);
+      })
   }
-
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{display:'flex', justifyContent:'center',flexDirection: 'column', alignItems: 'center'}}>
-        <Button onClick={handleClick({ vertical, horizontal })} startIcon={<FcGoogle />} sx={IconWithButton}>Google でログイン</Button>
-        <Button onClick={handleClick({ vertical, horizontal })} startIcon={<FaApple />} sx={{ ...IconWithButton, fontWeight: 'bold' }}>Appleのアカウントでログイン</Button>
+        <Button onClick={handleClick} startIcon={<FcGoogle />} sx={IconWithButton}>Google でログイン</Button>
+        <Button onClick={handleClick} startIcon={<FaApple />} sx={{ ...IconWithButton, fontWeight: 'bold' }}>Appleのアカウントでログイン</Button>
       </Box>
       <Box sx={{display:'flex', justifyContent:'center'}}>
         <div className="mataha">
@@ -98,7 +99,7 @@ const LogInForm = () => {
           <Button variant={'contained'} sx={{ ...CustomButton, border: 'none', color:'white',backgroundColor: '#1da1f2' }} type='submit'>ログイン</Button>
         </Box>
       </Box>
-      <SnackbarTop vertical={vertical} horizontal={horizontal} handleClose={handleClose} open={open}/>
+      <SnackbarTop handleClose={handleClose} openBar={openBar}/>
     </ThemeProvider>
   )
 }

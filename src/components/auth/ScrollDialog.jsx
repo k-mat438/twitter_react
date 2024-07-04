@@ -16,7 +16,7 @@ import { IconContext } from 'react-icons';
 import { CustomBackdrop } from "../../styles/DialogStyle";
 
 export default function ScrollDialogButton(props) {
-  const { variant, sx, buttonText, formComponent: FormComponent, setOpenAlert } = props;
+  const { variant, sx, buttonText, formComponent: FormComponent, setOpenAlert, setFalseRegister } = props;
   const [open, setOpen] = useState(false);
   const [ loading, setLoading ] = useState(true);
   
@@ -81,7 +81,7 @@ export default function ScrollDialogButton(props) {
             <Box sx={{display:'flex',justifyContent:'center'}}>
               <CircularProgress />
             </Box>
-             : <FormComponent handleClose={handleClose} setOpenAlert={setOpenAlert}/>}
+             : <FormComponent handleClose={handleClose} setOpenAlert={setOpenAlert} setFalseRegister={setFalseRegister}/>}
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
