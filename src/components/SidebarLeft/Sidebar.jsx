@@ -4,7 +4,8 @@ import Profile from "./Profile";
 import SidebarList from './SidebarList';
 
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+  const { user } = props;
   return (
     <>
     <Box sx={{height:'100%',overflow: 'auto',position:'fixed'}}>
@@ -14,7 +15,7 @@ const Sidebar = () => {
             <SidebarList />
           </div>
           <div>
-            <Profile />
+            <Profile user={user}/>
           </div>
         </Box>
       </ul>

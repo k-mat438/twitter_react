@@ -29,8 +29,8 @@ for (let i = 0; i <10; i++) {
 const MainContent = () => {
   return (
     <div>
-      {repeatedArray.map((tweet) => (
-        <Paper key={tweet.id}>
+      {repeatedArray.map((tweet, num) => (
+        <Paper key={num}>
           <div className="tweet">
             {tweet.content.map((line, index) => (
               <p key={index}>{line}</p>

@@ -22,7 +22,7 @@ const Routing = () => {
       setUser(res.data)
     }
   }
-  
+
   const Private = () => {
     if (isSignedIn) {
       return <Outlet />
@@ -31,12 +31,21 @@ const Routing = () => {
     }
   }
 
+  const Public = () => {
+    if (isSignedIn) {
+      return <Navigate to='/api/v1/tweets' />
+    } else {
+      return <Outlet />
+    }
+  }
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route element={<Public />}>
+          <Route path='/' element={<Home setIsSignedIn={setIsSignedIn} setUser={setUser}/>} />
+        </Route>
         <Route element={<Private />}>
-          <Route path='api/v1/tweets' element={<TweetsIndex />} />
+          <Route path='api/v1/tweets' element={<TweetsIndex user={user}/>} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>

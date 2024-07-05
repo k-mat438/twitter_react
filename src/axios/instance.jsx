@@ -4,7 +4,7 @@ import Cookies from "js-cookie"
 const apiHome = axios.create({
   baseURL: `${process.env.REACT_APP_REQUEST_URL}/api/v1`,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
 });
 

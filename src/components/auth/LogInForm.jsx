@@ -19,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 
 
-const LogInForm = () => {
+const LogInForm = (props) => {
+  const { setIsSignedIn, setUser } = props;
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -51,6 +52,8 @@ const LogInForm = () => {
           Cookies.set("_access_token", result.headers["access-token"])
           Cookies.set("_client", result.headers["client"])
           Cookies.set("_uid", result.headers["uid"])
+          setIsSignedIn(true);
+          setUser(result.data.data);
           navigate('/api/v1/tweets'); 
         }
       })

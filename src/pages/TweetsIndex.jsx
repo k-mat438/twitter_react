@@ -3,25 +3,14 @@ import '../styles/TweetIndex.css';
 import Sidebar from '../components/SidebarLeft/Sidebar';
 import MainContent from '../components/MainContents/MainContent';
 import { IoIosSearch } from "react-icons/io";
-import { getCurrentUser } from "../axios/instance";
-import { useEffect } from "react";
 
-const TweetsIndex = () => {
-  // useEffect(() => {
-  //   const fetchCurrentUser = async () => {
-  //     const user = await getCurrentUser();
-  //     if (user) {
-  //       console.log('Current User:', user);
-  //     }
-  //   };
-  //   fetchCurrentUser();
-  // }, []);
-
-
+const TweetsIndex = (props) => {
+  const { user } = props;
+  
   return (
     <Grid container spacing={2} sx={{height: '100vh'}}>
       <Grid item xs={3}>
-        <Sidebar />
+        <Sidebar user={user}/>
       </Grid>
 
       <Grid item xs={6} sx={{borderLeft: '1px solid #2f3336',borderRight: '1px solid #2f3336'}}>
