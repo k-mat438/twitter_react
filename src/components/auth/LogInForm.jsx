@@ -17,10 +17,10 @@ import { loginInstance } from '../../axios/instance';
 
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
+import {useAuth} from '../../contexts/AuthContext'
 
-
-const LogInForm = (props) => {
-  const { setIsSignedIn, setUser } = props;
+const LogInForm = () => {
+  const { setUser, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -44,6 +44,7 @@ const LogInForm = (props) => {
     setOpenBar(false);
   };
 
+
   const onSubmit = async(data) => {
     await loginInstance(data)
       .then((result) => {
@@ -52,8 +53,10 @@ const LogInForm = (props) => {
           Cookies.set("_access_token", result.headers["access-token"])
           Cookies.set("_client", result.headers["client"])
           Cookies.set("_uid", result.headers["uid"])
-          setIsSignedIn(true);
-          setUser(result.data.data);
+          setUser(result.data)
+          setIsAuthenticated(true)
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('user', JSON.stringify(result.data.data));
           navigate('/api/v1/tweets'); 
         }
       })

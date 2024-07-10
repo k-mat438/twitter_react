@@ -1,56 +1,56 @@
-import { Routes, Route, BrowserRouter as Router, Outlet, Navigate } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 import Home from '../pages/Home';
 import TweetsIndex from "../pages/TweetsIndex";
 import Page404 from "../pages/Page404";
+import Profile from "../pages/Profile";
 import { getCurrentUser } from "../axios/instance";
 
+import {useAuth} from '../contexts/AuthContext'
+
 const Routing = () => {
-  const [ isSignedIn, setIsSignedIn ] = useState(false)
-  const [ user, setUser ] = useState(null)
+  const { isAuthenticated, user, setUser, setIsAuthenticated} = useAuth();
 
   useEffect(() => {
-    checkCurrentUser()
-  },[setUser])
+    checkCurrentUser();
+    // checkAuthStatus()
+  },[])
 
-  const checkCurrentUser = async() => {
-    const res = await getCurrentUser()
+  useEffect(() => {
+    console.log('User', user);
+    console.log('Sign', isAuthenticated);
+  }, [user, isAuthenticated]);
+
+  const checkCurrentUser = async () => {
+    const res = await getCurrentUser();
     console.log(res)
     if (res.is_login) {
-      setIsSignedIn(true)
       setUser(res.data)
+      setIsAuthenticated(true)
     }
-  }
+  };
 
-  const Private = () => {
-    if (isSignedIn) {
-      return <Outlet />
-    } else {
-      return <Navigate to='/' />
-    }
-  }
+  const PrivateRoute = () => {
+    return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+  };
 
-  const Public = () => {
-    if (isSignedIn) {
-      return <Navigate to='/api/v1/tweets' />
-    } else {
-      return <Outlet />
-    }
-  }
+  const PublicRoute = () => {
+    return !isAuthenticated ? <Outlet /> : <Navigate to="/api/v1/tweets" replace />;
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route element={<Public />}>
-          <Route path='/' element={<Home setIsSignedIn={setIsSignedIn} setUser={setUser}/>} />
-        </Route>
-        <Route element={<Private />}>
-          <Route path='api/v1/tweets' element={<TweetsIndex user={user}/>} />
-        </Route>
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </Router>
-  )
-}
+    <Routes>
+      <Route element={<PublicRoute />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route element={<PrivateRoute />}>
+        <Route path="api/v1/tweets" element={<TweetsIndex />} />
+        <Route path="api/v1/profile" element={<Profile />} />
+      </Route>
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  );
+};
 
 export default Routing
