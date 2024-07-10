@@ -15,20 +15,23 @@ const Routing = () => {
   useEffect(() => {
     checkCurrentUser();
     // checkAuthStatus()
+    // localStorage.clear()
   },[])
 
   useEffect(() => {
     console.log('User', user);
     console.log('Sign', isAuthenticated);
+    // localStorage.clear()
   }, [user, isAuthenticated]);
 
-  const checkCurrentUser = async () => {
-    const res = await getCurrentUser();
-    console.log(res)
-    if (res.is_login) {
-      setUser(res.data)
-      setIsAuthenticated(true)
-    }
+  const checkCurrentUser = () => {
+    getCurrentUser().then((res) => {
+      console.log(res)
+      if (res.is_login) {
+        setUser(res.data)
+        setIsAuthenticated(true)
+      } 
+    }).catch((error) => console.log(error))
   };
 
   const PrivateRoute = () => {

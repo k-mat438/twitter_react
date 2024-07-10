@@ -31,8 +31,8 @@ export const loginInstance = async(data) => {
 }
 
 
-export const logOutInstance = async(data) => {
-  const response = await apiHome.post('/users/sign_out', data);
+export const logOutInstance = async() => {
+  const response = await apiPrivate.delete('/users/sign_out');
 
   return response.data
 }

@@ -55,9 +55,10 @@ const LogInForm = () => {
           Cookies.set("_uid", result.headers["uid"])
           setUser(result.data)
           setIsAuthenticated(true)
-          localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('user', JSON.stringify(result.data.data));
-          navigate('/api/v1/tweets'); 
+          // localStorage.setItem('isAuthenticated', 'true');
+          // localStorage.setItem('user', JSON.stringify(result.data.data));c
+          // navigate('/api/v1/tweets'); 
+          window.location.reload();
         }
       })
       .catch((error) => {
