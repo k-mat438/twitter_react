@@ -48,7 +48,7 @@ export const SidebarData = [
   {
     tittle: 'Profile',
     icon: <IoPersonOutline />,
-    link: '/api/v1/tweets'
+    link: '/api/v1/profile'
   },
   {
     tittle: 'More',

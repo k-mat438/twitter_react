@@ -10,26 +10,13 @@ const AuthContext = createContext({
 
 const AuthProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    // return localStorage.getItem('isAuthenticated') === 'true';
     return !!(Cookies.get("_access_token") || Cookies.get("_client") || Cookies.get("_uid"));
   });
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading , setLoading] = useState(true);
   const [user, setUser] = useState(null)
-  // const [user, setUser] = useState(() => {
-  //   const savedUser = localStorage.getItem('user');
-  //   return savedUser ? JSON.parse(savedUser) : null;
-  // });
-  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
-  //   const storedValue = Cookies.get('isAuthenticated');
-  //   return storedValue !== undefined ? JSON.parse(storedValue) : false;
-  // });
-  // const [user, setUser] = useState(() => {
-  //   const savedUser = localStorage.getItem('user');
-  //   return savedUser ? JSON.parse(savedUser) : null;
-  // });
-
+  
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, loading, setLoading }}>
       {children}
     </AuthContext.Provider>
   )

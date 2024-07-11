@@ -6,7 +6,7 @@ import xLogo from '../../x-logo.png';
 import { logOutInstance } from '../../axios/instance';
 import Cookies from "js-cookie"
 
-const Profile = () => {
+const UserCard = () => {
   const { user } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -64,4 +64,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserCard;

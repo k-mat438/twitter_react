@@ -15,13 +15,11 @@ import { CustomButton, IconWithButton } from "../../styles/HomeStyle";
 import { SnackbarTop } from '../snackbar/SnackbarTop';
 import { loginInstance } from '../../axios/instance';
 
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import {useAuth} from '../../contexts/AuthContext'
 
 const LogInForm = () => {
   const { setUser, setIsAuthenticated } = useAuth();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -55,9 +53,6 @@ const LogInForm = () => {
           Cookies.set("_uid", result.headers["uid"])
           setUser(result.data)
           setIsAuthenticated(true)
-          // localStorage.setItem('isAuthenticated', 'true');
-          // localStorage.setItem('user', JSON.stringify(result.data.data));c
-          // navigate('/api/v1/tweets'); 
           window.location.reload();
         }
       })

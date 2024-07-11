@@ -10,18 +10,15 @@ import { getCurrentUser } from "../axios/instance";
 import {useAuth} from '../contexts/AuthContext'
 
 const Routing = () => {
-  const { isAuthenticated, user, setUser, setIsAuthenticated} = useAuth();
+  const { isAuthenticated, user, setUser, setIsAuthenticated, setLoading} = useAuth();
 
   useEffect(() => {
     checkCurrentUser();
-    // checkAuthStatus()
-    // localStorage.clear()
   },[])
 
   useEffect(() => {
     console.log('User', user);
     console.log('Sign', isAuthenticated);
-    // localStorage.clear()
   }, [user, isAuthenticated]);
 
   const checkCurrentUser = () => {
@@ -30,6 +27,9 @@ const Routing = () => {
       if (res.is_login) {
         setUser(res.data)
         setIsAuthenticated(true)
+        setTimeout(() => {
+          setLoading(false);
+        },1500)
       } 
     }).catch((error) => console.log(error))
   };
