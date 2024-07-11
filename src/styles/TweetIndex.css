@@ -1,0 +1,61 @@
+/* .Tweetcontainer {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.sidebar {
+  width: 275px;
+  padding: 0 12px;
+}
+.main-content {
+  flex-grow: 1;
+  border-left: 1px solid #2f3336;
+  border-right: 1px solid #2f3336;
+}
+.right-sidebar {
+  width: 350px;
+  padding: 0 12px;
+}
+.nav-item {
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.tweet {
+  border-bottom: 1px solid #2f3336;
+  padding: 12px 16px;
+}
+.premium-box, .whats-happening {
+  background-color: #16181c;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.subscribe-button {
+  background-color: #1d9bf0;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-weight: bold;
+}
+.search-bar {
+  background-color: #202327;
+  border-radius: 9999px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+.post-button {
+  background-color: #1d9bf0;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-weight: bold;
+  margin-top: 12px;
+} */
+/* .nav-item {
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+} */

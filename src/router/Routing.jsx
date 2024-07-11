@@ -1,21 +1,59 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 import Home from '../pages/Home';
+import TweetsIndex from "../pages/TweetsIndex";
 import Page404 from "../pages/Page404";
-// import SignUp from '../pages/SignUp';
-// import SignIn from '../pages/SignIn';
+import Profile from "../pages/Profile";
+import { getCurrentUser } from "../axios/instance";
+
+import {useAuth} from '../contexts/AuthContext'
 
 const Routing = () => {
+  const { isAuthenticated, user, setUser, setIsAuthenticated, setLoading} = useAuth();
+
+  useEffect(() => {
+    checkCurrentUser();
+  },[])
+
+  useEffect(() => {
+    console.log('User', user);
+    console.log('Sign', isAuthenticated);
+  }, [user, isAuthenticated]);
+
+  const checkCurrentUser = () => {
+    getCurrentUser().then((res) => {
+      console.log(res)
+      if (res.is_login) {
+        setUser(res.data)
+        setIsAuthenticated(true)
+        setTimeout(() => {
+          setLoading(false);
+        },1500)
+      } 
+    }).catch((error) => console.log(error))
+  };
+
+  const PrivateRoute = () => {
+    return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+  };
+
+  const PublicRoute = () => {
+    return !isAuthenticated ? <Outlet /> : <Navigate to="/api/v1/tweets" replace />;
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        {/* <Route path='/api/v1/users/sign_up' element={<SignUp />} /> */}
-        {/* <Route path='/api/v1/users/sign_in' element={<ScrollDialogButton />} /> */}
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </Router>
-  )
-}
+    <Routes>
+      <Route element={<PublicRoute />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route element={<PrivateRoute />}>
+        <Route path="api/v1/tweets" element={<TweetsIndex />} />
+        <Route path="api/v1/profile" element={<Profile />} />
+      </Route>
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  );
+};
 
 export default Routing

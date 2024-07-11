@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from "../styles/DialogStyle";
+import { theme } from "../../styles/DialogStyle";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 
@@ -11,11 +11,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import { CustomButton, IconWithButton } from "../styles/HomeStyle";
-import Snackbar from '@mui/material/Snackbar';
+import { CustomButton, IconWithButton } from "../../styles/HomeStyle";
+import { SnackbarTop } from '../snackbar/SnackbarTop';
+import { loginInstance } from '../../axios/instance';
 
+import Cookies from "js-cookie"
+import {useAuth} from '../../contexts/AuthContext'
 
 const LogInForm = () => {
+  const { setUser, setIsAuthenticated } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -27,32 +31,41 @@ const LogInForm = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const [state, setState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
 
-  const { vertical, horizontal, open } = state;
+  const [openBar, setOpenBar] = useState(false);
 
-  const handleClick = () => () => {
-    setState({ ...state, open: true});
+  const handleClick = () => {
+    setOpenBar(true);
   };
 
   const handleClose = () => {
-    setState({ ...state, open: false});
+    setOpenBar(false);
   };
 
-  const onSubmit = (data) => {
-    console.log(data)
-  }
 
+  const onSubmit = async(data) => {
+    await loginInstance(data)
+      .then((result) => {
+        if (result.status === 200) {
+          console.log(result);
+          Cookies.set("_access_token", result.headers["access-token"])
+          Cookies.set("_client", result.headers["client"])
+          Cookies.set("_uid", result.headers["uid"])
+          setUser(result.data)
+          setIsAuthenticated(true)
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error('Registration error:', error);
+      })
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{display:'flex', justifyContent:'center',flexDirection: 'column', alignItems: 'center'}}>
-        <Button onClick={handleClick({ vertical, horizontal })} startIcon={<FcGoogle />} sx={IconWithButton}>Google でログイン</Button>
-        <Button onClick={handleClick({ vertical, horizontal })} startIcon={<FaApple />} sx={{ ...IconWithButton, fontWeight: 'bold' }}>Appleのアカウントでログイン</Button>
+        <Button onClick={handleClick} startIcon={<FcGoogle />} sx={IconWithButton}>Google でログイン</Button>
+        <Button onClick={handleClick} startIcon={<FaApple />} sx={{ ...IconWithButton, fontWeight: 'bold' }}>Appleのアカウントでログイン</Button>
       </Box>
       <Box sx={{display:'flex', justifyContent:'center'}}>
         <div className="mataha">
@@ -88,20 +101,7 @@ const LogInForm = () => {
           <Button variant={'contained'} sx={{ ...CustomButton, border: 'none', color:'white',backgroundColor: '#1da1f2' }} type='submit'>ログイン</Button>
         </Box>
       </Box>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={2500}
-        message="Not available yet"
-        key={vertical + horizontal}
-        ContentProps={{
-          style: {
-            backgroundColor: '#FFC107',
-            color: 'black', 
-          },
-        }}
-      />
+      <SnackbarTop handleClose={handleClose} openBar={openBar}/>
     </ThemeProvider>
   )
 }
