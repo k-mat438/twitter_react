@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from "@mui/material";
 import UserCard from "./UserCard";
-import SidebarList from './SidebarList';
+import SidebarNav from './Navigation/SidebarNav';
 
 
 const Sidebar = () => {
@@ -10,7 +10,7 @@ const Sidebar = () => {
       <ul>
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between',height:'90vh'}}>
           <div>
-            <SidebarList />
+            <SidebarNav />
           </div>
           <div>
             <UserCard />

@@ -3,7 +3,7 @@ import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { BsThreeDots } from "react-icons/bs";
 import { useAuth } from '../../contexts/AuthContext';
 import xLogo from '../../x-logo.png';
-import { logOutInstance } from '../../axios/instance';
+import { logOutApi } from '../../axios/authApi';
 import Cookies from "js-cookie"
 
 const UserCard = () => {
@@ -20,7 +20,7 @@ const UserCard = () => {
   };
 
   const handleSignOut = async() => {
-    await logOutInstance().then((result) => {
+    await logOutApi().then((result) => {
       console.log(result)
       if (result.success) {
         Cookies.remove("_access_token")
