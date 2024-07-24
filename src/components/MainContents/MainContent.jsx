@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 
 import Header from './Header';
-import TweetForm from './TweetForm';
-import Tweet from './Tweet';
+import TweetForm from './Tweet/TweetForm';
+import Tweet from './Tweet/Tweet';
+import TweetElon from './Tweet/TweetElon';
+
+import { useGetTweet } from '../../contexts/tweetContext';
 
 const MainContent = () => {
   const [tweetLoading, setTweetLoading] = useState(true);
+  const { tweets, getTweet } = useGetTweet();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,6 +20,10 @@ const MainContent = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    getTweet();
+  },[])
+  
   return (
     <Box
       sx={{
@@ -32,13 +40,14 @@ const MainContent = () => {
         </Box>
       ) : (
         <>
-          <Tweet />
-          <Tweet />
-          <Tweet />
-          <Tweet />
-          <Tweet />
-          <Tweet />
-          <Tweet />
+          <Tweet tweets={tweets}/>
+          <TweetElon />
+          <TweetElon />
+          <TweetElon />
+          <TweetElon />
+          <TweetElon />
+          <TweetElon />
+          <TweetElon />
         </>
       )}
     </Box>

@@ -13,7 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { CustomButton, IconWithButton } from "../../styles/HomeStyle";
 import { SnackbarTop } from '../snackbar/SnackbarTop';
-import { loginInstance } from '../../axios/instance';
+import { loginApi } from '../../axios/authApi';
 
 import Cookies from "js-cookie"
 import {useAuth} from '../../contexts/AuthContext'
@@ -44,7 +44,7 @@ const LogInForm = () => {
 
 
   const onSubmit = async(data) => {
-    await loginInstance(data)
+    await loginApi(data)
       .then((result) => {
         if (result.status === 200) {
           console.log(result);
