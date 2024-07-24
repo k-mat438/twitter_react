@@ -5,22 +5,16 @@ import Home from '../pages/Home';
 import TweetsIndex from "../pages/TweetsIndex";
 import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
-import { getCurrentUser } from "../axios/instance";
-
-import {useAuth} from '../contexts/AuthContext'
+import { getCurrentUser } from "../axios/authApi";
+import { useAuth } from '../contexts/AuthContext';
 
 const Routing = () => {
-  const { isAuthenticated, user, setUser, setIsAuthenticated, setLoading} = useAuth();
+  const { isAuthenticated, setUser, setIsAuthenticated, setLoading} = useAuth();
 
   useEffect(() => {
     checkCurrentUser();
   },[])
-
-  useEffect(() => {
-    console.log('User', user);
-    console.log('Sign', isAuthenticated);
-  }, [user, isAuthenticated]);
-
+  
   const checkCurrentUser = () => {
     getCurrentUser().then((res) => {
       console.log(res)
