@@ -1,7 +1,7 @@
 import { Box, Avatar, Typography, IconButton } from '@mui/material';
-import { FaRegComment, FaRetweet, FaRegHeart, FaRegBookmark } from 'react-icons/fa';
-import { IoStatsChart, IoShareOutline } from 'react-icons/io5';
+
 import Elon from '../../../Elon.jpg';
+import { TweetActionData } from './TweetActionData';
 
  const Data = {
   avatar: Elon,
@@ -39,38 +39,22 @@ const Tweet = ({ tweets }) => {
               <Typography variant="body1" sx={{ mb: 1, color: '#ffffff' }}>
                 {tweet.content}
               </Typography>
-              
-     {tweet.image_url && tweet.image_url.length > 0 && (
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap:0.2, borderRadius:2, overflow:'hidden'}}>
-        {tweet.image_url.map((url, i) => (
-          <Box key={i} component="img" src={url} alt={`画像 ${i + 1}`}
-            sx={{width: '247px', height: '140px',objectFit: 'cover'}}/>
-        ))}
-      </Box>
-       )}
+
+              {tweet.image_url && tweet.image_url.length > 0 && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap:0.2, borderRadius:2, overflow:'hidden'}}>
+                  {tweet.image_url.map((url, i) => (
+                    <Box key={i} component="img" src={url} alt={`画像 ${i + 1}`}
+                      sx={{width: '247px', height: '140px',objectFit: 'cover'}}/>
+                  ))}
+                </Box>
+              )}
               <Box sx={{ display: 'flex', justifyContent: 'space-between', color: '#8899a6' }}>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#1da1f2' } }}>
-                  <FaRegComment />
-                  <Typography sx={{ ml: 1, fontSize: '0.8rem' }}>{Data.comments}</Typography>
-                </IconButton>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#17bf63' } }}>
-                  <FaRetweet />
-                  <Typography sx={{ ml: 1, fontSize: '0.8rem' }}>{Data.retweets}</Typography>
-                </IconButton>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#e0245e' } }}>
-                  <FaRegHeart />
-                  <Typography sx={{ ml: 1, fontSize: '0.8rem' }}>{Data.likes}</Typography>
-                </IconButton>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#1da1f2' } }}>
-                  <IoStatsChart />
-                  <Typography sx={{ ml: 1, fontSize: '0.8rem' }}>{Data.views}</Typography>
-                </IconButton>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#1da1f2' } }}>
-                  <FaRegBookmark />
-                </IconButton>
-                <IconButton size="small" sx={{ color: 'inherit', '&:hover': { color: '#1da1f2' } }}>
-                  <IoShareOutline />
-                </IconButton>
+                {TweetActionData.map((value, key) => (
+                  <IconButton key={key} size="small" sx={{ color: 'inherit', '&:hover': { color: value.hoverColor } }}>
+                    {value.icon}
+                    {value.action}
+                  </IconButton>
+                ))}
               </Box>
             </Box>
           </Box>
